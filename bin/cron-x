@@ -1,0 +1,93 @@
+#!/bin/bash
+
+scriptName="cron-x"
+rootDir="/opt/$scriptName"
+binDir="$rootDir/bin"
+pidFile="/var/run/$scriptName.pid"
+crontabFile="/etc/crontab"
+timezone="Europe/Berlin"
+java="/opt/java/bin/java"
+
+function startService() {
+	$java -Duser.timezone="$timezone" -jar "$binDir/$scriptName.jar" -c "$crontabFile" >> /dev/null & echo $! > "$pidFile"
+}
+
+function log() {
+	message="$1"
+	echo -e "\n$message"
+}
+
+function running() {
+	if [ -f "$pidFile" ]
+	then
+		pid=$(cat "$pidFile")
+		output=$(ps aux | grep -v grep | grep "$pid")
+
+		if [ "$output" != "" ]
+		then
+			return 0
+		else
+			return 1
+		fi
+	else
+		return 1
+	fi
+}
+
+function start() {
+	if running
+	then
+		log "$scriptName is already running"
+	else
+		log "Starting $scriptName ..."
+		startService
+	fi
+}
+
+function stop() {
+	if running
+    then
+    	log "Stopping $scriptName ..."
+
+        pid=$(cat "$pidFile")
+
+        kill "$pid"
+
+        if running
+        then
+            kill -9 "$pid"
+        fi
+
+        rm "$pidFile"		
+	else
+		log "$scriptName is not running"
+	fi
+}
+
+function status() {
+	if running
+	then
+		log "$scriptName is running"
+	else
+		log "$scriptName is down"
+	fi
+}
+
+case "$1" in
+	start)
+		start
+	;;
+	stop)
+		stop
+	;;
+	restart)
+		stop
+		start
+	;;
+	status)
+		status
+	;;
+	*)
+		echo "Usage: $0 (start|stop|restart|status)"
+	;;
+esac
