@@ -2,14 +2,13 @@
 
 scriptName="cron-x"
 rootDir="/opt/$scriptName"
-binDir="$rootDir/bin"
 pidFile="/var/run/$scriptName.pid"
 crontabFile="/etc/crontab"
 timezone="Europe/Berlin"
 java="/opt/java/bin/java"
 
 function startService() {
-	$java -Duser.timezone="$timezone" -jar "$binDir/$scriptName.jar" -c "$crontabFile" >> /dev/null & echo $! > "$pidFile"
+	$java -Duser.timezone="$timezone" -jar "$rootDir/$scriptName.jar" -c "$crontabFile" >> /dev/null & echo $! > "$pidFile"
 }
 
 function log() {
