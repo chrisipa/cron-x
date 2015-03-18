@@ -15,5 +15,5 @@ Usage
 -------------
 * Run directly from console:
 ```
-/opt/cron-x/cron-x start
+sudo /opt/cron-x/cron-x start
 ```
