@@ -1,6 +1,8 @@
 Cron-X
 =======
 
+[![Build Status](https://papke.it/jenkins/buildStatus/icon?job=cron-x)](https://papke.it/jenkins/job/cron-x/)
+
 Java based drop-in replacement for cron scheduler which allows executing jobs every second. 
 
 Installation
