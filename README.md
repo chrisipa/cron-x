@@ -29,4 +29,3 @@ Usage
 ```
 sudo /opt/cron-x/cron-x start
 ```
-/opt/cron-x
