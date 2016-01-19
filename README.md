@@ -7,10 +7,20 @@ Java based drop-in replacement for cron scheduler which allows executing jobs ev
 
 Installation
 -------------
-* Download and extract the zip archive:
+* Create install directory:
 ```
-sudo wget https://raw.githubusercontent.com/chrisipa/cron-x/master/public/cron-x.zip
-sudo unzip cron-x.zip -d /opt
+sudo mkdir /opt/cron-x
+```
+
+* Download necessary files:
+```
+sudo wget https://raw.githubusercontent.com/chrisipa/cron-x/master/bin/cron-x -O /opt/cron-x/cron-x  
+sudo wget https://papke.it/jenkins/job/cron-x/lastStableBuild/de.papke%24cron-x/artifact/de.papke/cron-x/1.0.0/cron-x-1.0.0.jar -O /opt/cron-x/cron-x.jar
+```
+
+* Make starter script executable:
+```
+sudo chmod +x /opt/cron-x/cron-x
 ```
 
 Usage
@@ -19,3 +29,4 @@ Usage
 ```
 sudo /opt/cron-x/cron-x start
 ```
+/opt/cron-x
